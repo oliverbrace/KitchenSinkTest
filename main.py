@@ -3,13 +3,13 @@ import sys
 from pathlib import Path
 
 import kivy
-kivy.require("2.2.0")
-
 from kivy.core.window import Window
-
 from kivymd.app import MDApp
 
 from View.ManagerScreen.manager_screen import ManagerScreen
+
+# kivy.require("2.2.0")
+
 
 if getattr(sys, "frozen", False):
     os.environ["KITCHEN_SINK_ROOT"] = sys._MEIPASS
