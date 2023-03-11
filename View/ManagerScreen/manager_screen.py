@@ -4,11 +4,9 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.image import Image
 from kivy.uix.modalview import ModalView
-from kivy.uix.screenmanager import ScreenManager, NoTransition
+from kivy.uix.screenmanager import NoTransition, ScreenManager
 from kivy.utils import get_color_from_hex
-
 from kivymd.app import MDApp
-from kivymd.utils.set_bars_colors import set_bars_colors
 from kivymd.color_definitions import colors
 
 from View.screens import screens
@@ -25,96 +23,6 @@ class ManagerScreen(ScreenManager):
 
     def on_current(self, *args):
         super().on_current(*args)
-        self.set_bars_colors(self.app.theme_cls, self.current)
-
-    def set_bars_colors(self, instance_theme_cls, name_screen: str) -> None:
-        primary_color = instance_theme_cls.primary_color
-        bg_normal = instance_theme_cls.bg_normal
-
-        panel_colors = {
-            "menu": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Light",
-            },
-            "card": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": primary_color,
-                "navigation_icon_color": "Light",
-            },
-            "button": {
-                "status_bar_color": get_color_from_hex("#b88bf8"),
-                "navigation_bar_color": get_color_from_hex("#b88bf8"),
-                "navigation_icon_color": "Light",
-            },
-            "button_0": {
-                "status_bar_color": get_color_from_hex("#b88bf8"),
-                "navigation_bar_color": get_color_from_hex("#b88bf8"),
-                "navigation_icon_color": "Light",
-            },
-            "button_1": {
-                "status_bar_color": get_color_from_hex(colors["Green"]["800"]),
-                "navigation_bar_color": get_color_from_hex(colors["Green"]["800"]),
-                "navigation_icon_color": "Light",
-            },
-            "field": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Light",
-            },
-            "field_0": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Light",
-            },
-            "field_1": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": primary_color,
-                "navigation_icon_color": "Light",
-            },
-            "field_2": {
-                "status_bar_color": bg_normal,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Dark",
-            },
-            "chip": {
-                "status_bar_color": bg_normal,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Dark",
-            },
-            "list": {
-                "status_bar_color": bg_normal,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Dark",
-            },
-            "sliver": {
-                "status_bar_color": get_color_from_hex("#90d1f0"),
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Dark",
-            },
-            "tile": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Light",
-            },
-            "rail": {
-                "status_bar_color": get_color_from_hex("#fffcf4"),
-                "navigation_bar_color": get_color_from_hex("#fffcf4"),
-                "navigation_icon_color": "Dark",
-            },
-            "hero": {
-                "status_bar_color": primary_color,
-                "navigation_bar_color": bg_normal,
-                "navigation_icon_color": "Light",
-            },
-        }
-
-        if name_screen in panel_colors:
-            set_bars_colors(
-                panel_colors[name_screen]["status_bar_color"],
-                panel_colors[name_screen]["navigation_bar_color"],
-                panel_colors[name_screen]["navigation_icon_color"],
-            )
 
     def create_screen(self, name_screen):
         if name_screen not in self._screen_names:
@@ -122,7 +30,9 @@ class ManagerScreen(ScreenManager):
             self.load_common_package(name_screen)
             exec(f"import View.{screens[name_screen]}")
             self.app.load_all_kv_files(
-                os.path.join(self.app.directory, "View", screens[name_screen].split(".")[0])
+                os.path.join(
+                    self.app.directory, "View", screens[name_screen].split(".")[0]
+                )
             )
             view = eval(
                 f'View.{screens[name_screen]}.{screens[name_screen].split(".")[0]}View()'

@@ -8,17 +8,7 @@ from View.MenuScreen.componemts import MenuCard  # NOQA
 class MenuScreenView(MDScreen):
     def on_enter(self, *args) -> None:
         if not self.ids.menu_list.data:
-            manu_list = [
-                "Field",
-                "Card",
-                "Button",
-                "Chip",
-                "List",
-                "Sliver",
-                "Rail",
-                "Tile",
-                "Hero",
-            ]
+            manu_list = ["Hero"]
             manu_list.sort()
             for name_card in manu_list:
                 self.ids.menu_list.data.append(
